@@ -1,0 +1,66 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class NumberGuessingGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        
+        int numberToGuess = random.nextInt(100) + 1; // Random number between 1 and 100
+        int userGuess = 0;
+        int attempts = 0;
+        
+        printWelcomeMessage();
+        
+        while (userGuess != numberToGuess) {
+            System.out.print("Enter your guess: ");
+            
+            if (scanner.hasNextInt()) {
+                userGuess = scanner.nextInt();
+                attempts++;
+                
+                if (userGuess == 0) {
+                    System.out.println("You gave up! The number was " + numberToGuess + ". Better luck next time!");
+                    break;
+                }
+                
+                giveFeedback(userGuess, numberToGuess);
+                
+                if (userGuess == numberToGuess) {
+                    printWinMessage(attempts);
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // Clear invalid input
+            }
+        }
+        
+        System.out.println("Thanks for playing! Goodbye!");
+        scanner.close();
+    }
+    
+    public static void printWelcomeMessage() {
+        System.out.println("====================================");
+        System.out.println("  Welcome to the Number Guessing Game!");
+        System.out.println("====================================");
+        System.out.println("I have selected a number between 1 and 100.");
+        System.out.println("Try to guess it, and I'll tell you if you're too high or too low!");
+        System.out.println("Type '0' to give up.");
+        System.out.println("------------------------------------");
+    }
+    
+    public static void giveFeedback(int guess, int correctNumber) {
+        if (guess < correctNumber) {
+            System.out.println("Too low! Try again.");
+        } else if (guess > correctNumber) {
+            System.out.println("Too high! Try again.");
+        }
+    }
+    
+    public static void printWinMessage(int attempts) {
+        System.out.println("====================================");
+        System.out.println("🎉 Congratulations! You guessed the number! 🎉");
+        System.out.println("It took you " + attempts + " attempts.");
+        System.out.println("====================================");
+    }
+}
